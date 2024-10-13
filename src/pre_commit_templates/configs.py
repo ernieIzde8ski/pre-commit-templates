@@ -1,8 +1,8 @@
 import tomllib
-from functools import cache
 from pathlib import Path
 
-from pydantic import BaseModel, Field, JsonValue, PrivateAttr
+from loguru import logger
+from pydantic import BaseModel, Field, JsonValue
 
 from .git import get_root
 
@@ -54,15 +54,13 @@ class Configs(BaseModel):
     target_directory: str = Field(default="./")
     """Directory to apply templates into. Defined relative to the root directory of the repository."""
 
-    _repository_root: Path = PrivateAttr()
+    repository_root: Path = Field(init=False, default=Path())
 
-    @cache
     def resolve_template_directory(self) -> Path:
-        return (self._repository_root / self.template_directory).resolve()
+        return (self.repository_root / self.template_directory).resolve()
 
-    @cache
     def resolve_target_directory(self) -> Path:
-        return (self._repository_root / self.target_directory).resolve()
+        return (self.repository_root / self.target_directory).resolve()
 
     @classmethod
     def from_environment(cls, root: Path | None = None):
@@ -73,10 +71,12 @@ class Configs(BaseModel):
         pyproject_data = read_pyproject_config(pyproject_path)
 
         if pyproject_data is not None:
-            res = cls.model_validate(pyproject_data)
+            self = cls.model_validate(pyproject_data)
         else:
-            res = cls()
+            self = cls()
 
-        res._repository_root = root
+        self.repository_root = root
 
-        return res
+        logger.debug(f"Loaded config: {self}")
+
+        return self

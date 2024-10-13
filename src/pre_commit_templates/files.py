@@ -19,6 +19,7 @@ def get_matching_files(
 
     for path in updated_paths:
         template_match: TemplateMatch
+        path = path.resolve()
 
         if path.is_relative_to(template_directory):
             relative = path.relative_to(template_directory)
@@ -33,7 +34,10 @@ def get_matching_files(
                 continue
         else:
             logger.warning(
-                "path is not relative to either template or target directory: {path}"
+                f"path is not relative to either template or target directory:"
+                f"\n\t{              path = }"
+                f"\n\t{template_directory = }"
+                f"\n\t{  target_directory = }"
             )
             continue
 

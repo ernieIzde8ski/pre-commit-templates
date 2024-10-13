@@ -8,5 +8,5 @@ _ROOT_COMMAND: tuple[str, ...] = ("git", "rev-parse", "--show-toplevel")
 
 def get_root() -> Path:
     """Gets the root of the current repository."""
-    output = subprocess.check_output(_ROOT_COMMAND, text=True)
+    output = subprocess.check_output(_ROOT_COMMAND, text=True).rstrip("\n")
     return Path(output)

@@ -1,0 +1,49 @@
+# dev tools
+[tool.ruff]
+line-length     = 90
+indent-width    = 4
+target-version  = "py312"
+
+[tool.ruff.format]
+docstring-code-format = true
+line-ending = "lf"
+skip-magic-trailing-comma = true
+
+[tool.isort]
+profile = "black"
+line_length = 90
+
+[tool.basedpyright]
+reportImplicitStringConcatenation = false
+pythonVersion = "3.12"
+
+# packaging
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pre-commit-templates"
+authors = [
+    { name="Ernest Izdebski", email="44341687+ernieIzde8ski@users.noreply.github.com" }
+]
+description = "Generate files programmatically using pre-commit and jinja2"
+readme = { file = "README.md", content-type="text/markdown" }
+requires-python = ">=3.12"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dynamic = ["dependencies", "version"]
+license = { file = "LICENSE" }
+scripts = { "pre-commit-templates" = "pre_commit_templates.app:app" }
+[project.urls]
+Homepage = "https://github.com/ernieIzde8ski/pre-commit-templates"
+Issues =  "https://github.com/ernieIzde8ski/pre-commit-templates/issues"
+[tool.setuptools.dynamic]
+dependencies = { file = "requirements.txt" }
+version = { attr = "pre_commit_templates.version.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]

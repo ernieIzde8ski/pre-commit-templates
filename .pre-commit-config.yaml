@@ -1,0 +1,20 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: "v5.0.0"
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: "v0.6.9"
+    hooks:
+      - id: ruff-format
+  - repo: https://github.com/PyCQA/isort
+    rev: "5.13.2"
+    hooks:
+      - id: isort
+  - repo: https://github.com/DetachHead/basedpyright-pre-commit-mirror
+    rev: "1.18.4"
+    hooks:
+      - id: basedpyright
+        additional_dependencies: ["frozenlist>=1.4.1", "jinja2>=3.1.4", "loguru>=0.7.2", "pydantic>=2.9.2", "typer>=0.12.5"]

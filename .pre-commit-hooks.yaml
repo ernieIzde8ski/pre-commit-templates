@@ -1,0 +1,5 @@
+- id: pre-commit-templates
+  name: pre-commit-templates
+  entry: pre-commit-templates
+  language: python
+  types: [text]
